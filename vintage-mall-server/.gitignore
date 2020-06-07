@@ -1,0 +1,5 @@
+# extension files
+node_modules
+
+# db connection file
+dbConfig.js
