@@ -21,5 +21,10 @@ module.exports = {
     MYPAGE_UPDATE_SUCCESS : "마이 페이지 업데이트 성공",
     NEW_ITEM_REGIST_SUCCESS : "새로운 아이템 등록 성공",
     PAGING_SHOP_SUCCESS : "샵 페이징 로딩 성공",
-    SHOP_ITEM_REGIST_SUCCESS : "샵 아이템 조회 성공"
+    SHOP_ITEM_REGIST_SUCCESS : "샵 아이템 조회 성공",
+    NEW_TRANSACTION_SUCCESS : "새로운 트랜잭션 생성 성공",
+    GET_MY_TRANSACTION_SUCCESS : "나의 트랜잭션 가져오기 성공",
+    NEW_COMMENT_SUCCESS : "새로운 댓글 생성 성공",
+    DELETE_COMMENT_SUCCESS : "댓글 삭제 성공",
+    GET_COMMENT_SUCCESS : "댓글 조회 성공"
 };

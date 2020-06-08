@@ -5,6 +5,13 @@ const resMessage = require('../../module/utils/responseMessage');
 const statusCode = require('../../module/utils/statusCode');
 const authUtils = require('../../module/utils/authUtils');
 const Board = require('../../model/board/Board');
+const Comment = require('../../model/board/Comment');
+
+const dummyComment = {
+    userIdx:1,
+    board_idx:1,
+    text:"님아 이런것좀 하지마요!"
+}
 
 //게시물 전체 조회
 router.get('/',async(req,res)=>{
@@ -78,5 +85,42 @@ router.delete('/:board_idx',(req,res)=>{
         .send(utils.successFalse(statusCode.INTERNAL_SERVER_ERROR,resMessage.INTERNAL_SERVER_ERROR));
     });
 });
+
+//댓글 등록
+router.post('/comment',(req,res)=>{
+    Comment.newComment(dummyComment.userIdx,dummyComment.board_idx,dummyComment.text)
+    .then(({code,json})=>{
+        res.status(code).send(json);
+    })
+    .catch((err)=>{
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(resMessage.INTERNAL_SERVER_ERROR);
+    })
+});
+
+//게시물 댓글 조회
+router.get('/:board_idx/comment',(req,res)=>{
+    const board_idx = req.params.board_idx;
+    console.log(board_idx);
+    Comment.getComment(board_idx)
+    .then(({code,json})=>{
+        res.status(code).send(json);
+    })
+    .catch((err)=>{
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(resMessage.INTERNAL_SERVER_ERROR);
+    })
+})
+
+//게시물 댓글 삭제
+router.delete('/comment/:comment_idx',(req,res)=>{
+    const comment_idx = req.params.comment_idx;
+    console.log(comment_idx);
+    Comment.deleteComment(comment_idx)
+    .then(({code,json})=>{
+        res.status(code).send(json);
+    })
+    .catch((err)=>{
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(resMessage.INTERNAL_SERVER_ERROR);
+    })
+})
 
 module.exports = router;

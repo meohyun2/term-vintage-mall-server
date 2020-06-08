@@ -5,6 +5,7 @@ const pool = require('../../module/pool');
 const moment = require('moment');
 
 Board = {
+    // 페이징 하기
     getAllBoard : (userIdx) => {
         return new Promise(async (resolve,reject)=>{
             const getAllBoard =  `SELECT * FROM board`;
@@ -17,9 +18,7 @@ Board = {
                 });
                 return;
             } else {
-                // 연동 성공
-                const json = await JSON.parse(getAllBoardResult);
-                console.log(json);
+                console.log(getAllBoardResult);
                 resolve({
                     code : statusCode.OK,
                     json : utils.successTrue(statusCode.OK,resMessage.BOARD_REGIST_ALL_SUCCESS,getAllBoardResult)

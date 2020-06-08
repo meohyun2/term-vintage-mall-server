@@ -6,18 +6,8 @@ const moment = require('moment');
 const jwt = require('../../module/jwt');
 
 MyPage = {
-  getMyPage : (token) => {
+  getMyPage : (index) => {
     return new Promise(async(resolve,reject)=>{
-      // 토큰 인증, 클라이언트는 무효하다면 로그인으로 리디렉션할것.
-      // const verifiedToken = jwt.verify(jwt);
-      // if(verifiedToken==-3 || verifiedToken==-2){
-      //   resolve({
-      //     code : statusCode.UNAUTHORIZED,
-      //     json : utils.successFalse(statusCode.UNAUTHORIZED,resMessage.UNAUTHORIZED)
-      //   })
-      // }
-
-      // const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = '${verifiedToken.id}'`;
       const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = 'meohyun2'`;
       const MyInfoResult = await pool.queryParam_None(getMyInfoSQL);
       if(!MyInfoResult){
@@ -37,16 +27,6 @@ MyPage = {
 
   updateMyPage : (updateData) => {
     return new Promise(async(resolve,reject)=>{
-      // 토큰 인증, 클라이언트는 무효하다면 로그인으로 리디렉션할것.
-      // const verifiedToken = jwt.verify(jwt);
-      // if(verifiedToken==-3 || verifiedToken==-2){
-      //   resolve({
-      //     code : statusCode.UNAUTHORIZED,
-      //     json : utils.successFalse(statusCode.UNAUTHORIZED,resMessage.UNAUTHORIZED)
-      //   })
-      // }
-  
-      // const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = '${verifiedToken.id}'`;
       const getMyPageSQL =`update user set birthday = '${updateData.birthday}', sex = '${updateData.sex}', phone_number = '${updateData.phone_number}' where id = 'meohyun2'`;
       const myPageResult = await pool.queryParam_None(getMyPageSQL); 
   

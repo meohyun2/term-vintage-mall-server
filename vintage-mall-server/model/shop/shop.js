@@ -8,16 +8,6 @@ const jwt = require('../../module/jwt');
 Shop = {
   newItems : (product) => {
     return new Promise(async(resolve,reject)=>{
-      // 토큰 인증, 클라이언트는 무효하다면 로그인으로 리디렉션할것. (참고로 이건 관리자 아이디)
-      // const verifiedToken = jwt.verify(jwt);
-      // if(verifiedToken==-3 || verifiedToken==-2){
-      //   resolve({
-      //     code : statusCode.UNAUTHORIZED,
-      //     json : utils.successFalse(statusCode.UNAUTHORIZED,resMessage.UNAUTHORIZED)
-      //   })
-      // }
-
-      // const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = '${verifiedToken.id}'`;
       const registration_date = moment().format('YYYY[-]MM[-]DD');
       const newItemSQL = `insert into product(product_name,product_price,product_regdate,product_type,vintage_type) values('${product.product_name}',${product.product_price},'${registration_date}',${product.product_type},${product.vintage_type});`;
       const newItemResult = await pool.queryParam_None(newItemSQL);
