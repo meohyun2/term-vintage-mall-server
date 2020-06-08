@@ -9,7 +9,7 @@ module.exports = {
             issuer: "vintage_mall"
         };
         const payload = {
-            idx: user
+            id: user
         };
         let token = jwt.sign(payload, secretOrPrivateKey, options);
         return token;

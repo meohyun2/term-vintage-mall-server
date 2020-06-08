@@ -6,8 +6,6 @@ const moment = require('moment');
 const jwt = require('../../module/jwt');
 const encrypt = require('../../module/encryption');
 
-// JWT 적용 X
-
 User = {
   logIn : (id,pwd) => {
     return new Promise(async(resolve,reject)=>{
@@ -28,6 +26,7 @@ User = {
       if(hashedInput.hashed==JsonResult[0].pwd){
         //로그인 성공, 토큰 발급
         const token = jwt.sign(JsonResult[0].id);
+        console.log(jwt.verify(token).id);
         resolve({
           code : statusCode.OK,
           json : utils.successTrue(statusCode.OK,resMessage.LOGIN_SUCCESS,token)

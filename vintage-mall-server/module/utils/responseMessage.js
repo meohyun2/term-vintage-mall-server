@@ -11,9 +11,15 @@ module.exports = {
     ABLE_NICKNAME: "사용가능한 닉네임",
     UNAUTHORIZED: "권한이 없는 유저입니다.",
     DB_ERROR : "서버 연동 실패.",
+    INTERNAL_SERVER_ERROR : "서버 연동 오류",
     BOARD_REGIST_ALL_SUCCESS : "게시물 전체 조회 성공",
     BOARD_REGIST_ONE_SUCCESS : "게시물 하나 조회 성공",
     NEW_BOARD_SUCCESS : "게시물 등록 성공",
     UPDATE_BOARD_SUCCESS : "게시물 수정 성공",
-    DELETE_BOARD_SUCCESS : "게시물 삭제 성공"
+    DELETE_BOARD_SUCCESS : "게시물 삭제 성공",
+    MYPAGE_GET_SUCCESS : "마이 페이지 조회 성공",
+    MYPAGE_UPDATE_SUCCESS : "마이 페이지 업데이트 성공",
+    NEW_ITEM_REGIST_SUCCESS : "새로운 아이템 등록 성공",
+    PAGING_SHOP_SUCCESS : "샵 페이징 로딩 성공",
+    SHOP_ITEM_REGIST_SUCCESS : "샵 아이템 조회 성공"
 };
