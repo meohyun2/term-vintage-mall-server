@@ -40,7 +40,6 @@ User = {
     })
   },
   signUp : (user) => {
-    console.log(user.id,user.pwd,user.phone_number,user.birthday,user.registration_date,user.sex);
     return new Promise(async(resolve,reject)=>{
       if(!user.id||!user.pwd||!user.phone_number||!user.birthday||!user.sex){
         resolve({

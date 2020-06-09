@@ -21,7 +21,9 @@ const dummyLogin = {
 
 //회원가입
 router.post('/signUp',(req,res)=>{
-  User.signUp(dummyInput)
+  const UserBody = req.body;
+  console.log(UserBody);
+  User.signUp(UserBody)
   .then(({code,json})=>{
     res.status(code).send(json);
   })
