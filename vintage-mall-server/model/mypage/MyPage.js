@@ -6,9 +6,9 @@ const moment = require('moment');
 const jwt = require('../../module/jwt');
 
 MyPage = {
-  getMyPage : (index) => {
+  getMyPage : (id) => {
     return new Promise(async(resolve,reject)=>{
-      const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = 'meohyun2'`;
+      const getMyInfoSQL =`select id,phone_number,birthday,sex from user where id = '${id}'`;
       const MyInfoResult = await pool.queryParam_None(getMyInfoSQL);
       if(!MyInfoResult){
         resolve({
@@ -25,9 +25,9 @@ MyPage = {
     })
   },
 
-  updateMyPage : (updateData) => {
+  updateMyPage : (updateData,id) => {
     return new Promise(async(resolve,reject)=>{
-      const getMyPageSQL =`update user set birthday = '${updateData.birthday}', sex = '${updateData.sex}', phone_number = '${updateData.phone_number}' where id = 'meohyun2'`;
+      const getMyPageSQL =`update user set phone_number = '${updateData}' where id = '${id}'`;
       const myPageResult = await pool.queryParam_None(getMyPageSQL); 
   
       if(!myPageResult){

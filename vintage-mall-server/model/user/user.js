@@ -9,6 +9,7 @@ const encrypt = require('../../module/encryption');
 User = {
   logIn : (id,pwd) => {
     return new Promise(async(resolve,reject)=>{
+      console.log(id,pwd);
       const matchSQL = 
       `select id,pwd,salt from user where id ='${id}'`;
       const matchSQLResult = await pool.queryParam_None(matchSQL);
@@ -22,14 +23,14 @@ User = {
       console.log(JsonResult[0].id);
       // input value hashing
       const hashedInput = await encrypt.encryptWithSalt(pwd,JsonResult[0].salt);
-      console.log(hashedInput.hashed+',와 이걸 비교'+JsonResult.pwd);
+      console.log(hashedInput.hashed+',와 이걸 비교'+JsonResult[0].pwd);
       if(hashedInput.hashed==JsonResult[0].pwd){
         //로그인 성공, 토큰 발급
         const token = jwt.sign(JsonResult[0].id);
-        console.log(jwt.verify(token).id);
+        console.log(token);
         resolve({
           code : statusCode.OK,
-          json : utils.successTrue(statusCode.OK,resMessage.LOGIN_SUCCESS,token)
+          json : utils.successTrue(statusCode.OK,resMessage.LOGIN_SUCCESS,{token:token})
         })
       }else{
         resolve({
@@ -62,6 +63,30 @@ User = {
           code : statusCode.BAD_REQUEST,
           json : utils.successFalse(statusCode.BAD_REQUEST,resMessage.SIGNIN_FAIL)
         });
+      }
+    })
+  },
+  authCheck : (token) =>{
+    return new Promise(async(resolve,reject)=>{
+      const tokenFlag = jwt.verify(token);
+      if(tokenFlag==-2){
+        // expired token
+        const newToken = jwt.sign(token.decode().id);
+        resolve({
+          code : statusCode.OK,
+          json : utils.successTrue(statusCode.OK,resMessage.RE_AUTHORIZATION_SUCCESS,{token:newToken})
+        })
+      }else if(tokenFlag==-3){
+        // invalid token
+        resolve({
+          code : statusCode.UNAUTHORIZED,
+          json : utils.successFalse(statusCode.UNAUTHORIZED,resMessage.UNAUTHORIZED)
+        })
+      }else{
+        resolve({
+          code : statusCode.OK,
+          json : utils.successTrue(statusCode.OK,resMessage.AUTHORIZATION_SUCCESS,token)
+        })
       }
     })
   }

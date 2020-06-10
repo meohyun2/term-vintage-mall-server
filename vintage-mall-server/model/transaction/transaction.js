@@ -10,7 +10,16 @@ Transaction = {
     return new Promise(async(resolve,reject)=>{
       const transaction_date = moment().format('YYYY[-]MM[-]DD[ ]HH[:]MM[:]SS');
       console.log(transaction_date);
-      const newTransactionSQL = `insert into transaction(product_id,transaction_date,buyer) values(${product_id},'${transaction_date}',${buyer});`;
+      const getMyIDSQL = `select user_idx from user where id='${buyer}'`;
+      const getMyIdResult = await pool.queryParam_None(getMyIDSQL);
+      if(!getMyIdResult){
+        resolve({
+          code : statusCode.BAD_REQUEST,
+          json : utils.successFalse(statusCode.BAD_REQUEST,resMessage.NULL_VALUE)
+        });
+      }
+      console.log(getMyIdResult[0].user_idx);
+      const newTransactionSQL = `insert into transaction(product_id,transaction_date,buyer) values(${product_id},'${transaction_date}',${getMyIdResult[0].user_idx});`;
       const newTransactionResult = await pool.queryParam_None(newTransactionSQL);
       
       if(!newTransactionResult){
@@ -29,7 +38,7 @@ Transaction = {
   // 내 트랜잭션 가져오기
   getMyTransaction : (user_idx) => {
     return new Promise(async(resolve,reject)=>{
-      const getMyTransactionSQL = `select product_id,transaction_date from transaction join user where buyer = (select user_idx from user where id = 'meohyun2')`;
+      const getMyTransactionSQL = `select product_id,transaction_date from transaction where buyer = (select user_idx from user where id = '${user_idx}')`;
       
       const getMyTransactionResult = await pool.queryParam_None(getMyTransactionSQL);
       if(!getMyTransactionResult){

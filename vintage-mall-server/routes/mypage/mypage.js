@@ -5,6 +5,7 @@ const resMessage = require('../../module/utils/responseMessage');
 const statusCode = require('../../module/utils/statusCode');
 const authUtils = require('../../module/utils/authUtils');
 const MyPage = require('../../model/mypage/MyPage');
+const jwt = require('../../module/jwt');
 
 const dummyInput = {
   birthday : '1992-11-15',
@@ -14,7 +15,10 @@ const dummyInput = {
 
 //마이 페이지 조회
 router.get('/',(req,res)=>{
-  MyPage.getMyPage()
+  const token = req.headers["authorization"].replace("Bearer ","");
+  const id = jwt.verify(token).id;
+  
+  MyPage.getMyPage(id)
   .then(({code,json})=> {
     res.status(code).send(json);
   })
@@ -26,7 +30,10 @@ router.get('/',(req,res)=>{
 
 //나의 정보 수정
 router.post('/',(req,res)=>{
-  MyPage.updateMyPage(dummyInput)
+  const phone_number = req.body.phone_number;
+  const id = jwt.verify(req.body.token).decoded.id;
+  console.log(phone_number,id);
+  MyPage.updateMyPage(phone_number,id)
   .then(({code,json})=>{
     res.status(code).send(json);
   })

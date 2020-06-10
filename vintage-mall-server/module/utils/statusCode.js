@@ -1,6 +1,5 @@
 module.exports = {
     OK: 200,            // Get, Delete 성공 시
-    CREATED: 201,       // Post, Put 성공 시
     NO_CONTENT: 204,    // 보내줄 컨텐츠 없음
     BAD_REQUEST: 400,   // 클라이언트 문제
     UNAUTHORIZED: 401,  // 인증자격 없음

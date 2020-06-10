@@ -26,5 +26,7 @@ module.exports = {
     GET_MY_TRANSACTION_SUCCESS : "나의 트랜잭션 가져오기 성공",
     NEW_COMMENT_SUCCESS : "새로운 댓글 생성 성공",
     DELETE_COMMENT_SUCCESS : "댓글 삭제 성공",
-    GET_COMMENT_SUCCESS : "댓글 조회 성공"
+    GET_COMMENT_SUCCESS : "댓글 조회 성공",
+    AUTHORIZATION_SUCCESS : "토큰 인증 성공",
+    RE_AUTHORIZATION_SUCCESS : "토큰 만료, 재발급 성공"
 };
