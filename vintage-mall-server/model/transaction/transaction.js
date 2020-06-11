@@ -38,7 +38,7 @@ Transaction = {
   // 내 트랜잭션 가져오기
   getMyTransaction : (user_idx) => {
     return new Promise(async(resolve,reject)=>{
-      const getMyTransactionSQL = `select product_id,transaction_date from transaction where buyer = (select user_idx from user where id = '${user_idx}')`;
+      const getMyTransactionSQL = `select product_id,product_name,transaction_date from transaction join product where buyer = (select user_idx from user where id = '${user_idx}') and transaction.product_id = product.product_idx`;
       
       const getMyTransactionResult = await pool.queryParam_None(getMyTransactionSQL);
       if(!getMyTransactionResult){

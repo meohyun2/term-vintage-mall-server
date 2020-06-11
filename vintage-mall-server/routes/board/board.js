@@ -16,7 +16,7 @@ const dummyComment = {
 //게시물 전체 조회
 router.get('/',async(req,res)=>{
     // const userIdx = req.decoded.idx;
-    Board.getAllBoard(1)
+    Board.getAllBoard()
     .then(({code,json}) => {
         res.status(code).send(json);
     })
@@ -87,13 +87,19 @@ router.delete('/:board_idx',(req,res)=>{
 });
 
 //댓글 등록
-router.post('/comment',(req,res)=>{
-    Comment.newComment(dummyComment.userIdx,dummyComment.board_idx,dummyComment.text)
+router.post('/newcomment',(req,res)=>{
+    const token = req.body.token;
+    const id = jwt.verify(token).id;
+    const text = req.body.text;
+    const board_idx = req.body.board_to;
+    console.log(id);
+    Comment.newComment(id,board_idx,text)
     .then(({code,json})=>{
         res.status(code).send(json);
     })
     .catch((err)=>{
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(resMessage.INTERNAL_SERVER_ERROR);
+        console.log('에러나옴'+err);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(resMessage.INTERNAL_SERVER_ERROR,err);
     })
 });
 
