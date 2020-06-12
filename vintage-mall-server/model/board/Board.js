@@ -9,7 +9,7 @@ Board = {
     getAllBoard : (userIdx) => {
         return new Promise(async (resolve,reject)=>{
             const Offset=0;
-            const getPageBoard =  `SELECT board_idx,title,text,write_date,id FROM board join user where writer=user_idx limit=10 offset ${Offset}`;
+            const getPageBoard =  `SELECT board_idx,title,text,write_date,id FROM board join user where writer=user_idx limit 10 offset=${Offset}`;
             const getAllBoardResult = await pool.queryParam_None(getPageBoard);
             if(!getAllBoardResult){
                 // 연동 실패
