@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 const secretOrPrivateKey = "tmakdlfrpdlxm19!";
+const responseMessage = require('../module/utils/responseMessage');
+const statusCode = require('../module/utils/statusCode');
+const utils = require('../module/utils/utils');
 
 module.exports = {
     sign: function (user) {
@@ -31,5 +34,15 @@ module.exports = {
             }
         }
         return decoded;
+    },
+    middleAuthChecker : async(token)=>{
+        const parsedToken = request.headers.authorization.split('Bearer ')[1];
+        const verifiedTokenResult = jwt.verify(parsedToken,secretOrPrivateKey,(err)=>{
+            if(err){
+                response.status(statusCode.UNAUTHORIZED).send(utils.successFalse(statusCode.UNAUTHORIZED,responseMessage.UNAUTHORIZED));
+                return;
+            }
+        });
+        return verifiedTokenResult;
     }
 };

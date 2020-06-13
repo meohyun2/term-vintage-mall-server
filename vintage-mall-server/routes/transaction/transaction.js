@@ -21,7 +21,7 @@ router.post('/',(req,res)=>{
 })
 
 // 나의 트랜잭션 조회
-router.get('/',(req,res)=>{
+router.get('/',jwt.middleAuthChecker,(req,res)=>{
   const token = req.headers["authorization"].replace("Bearer ","");
   const id = jwt.verify(token).id;
   Transaction.getMyTransaction(id)
