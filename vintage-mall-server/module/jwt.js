@@ -35,14 +35,14 @@ module.exports = {
         }
         return decoded;
     },
-    middleAuthChecker : async(token)=>{
-        const parsedToken = request.headers.authorization.split('Bearer ')[1];
+    middleAuthChecker : async(req,res,next)=>{
+        console.log('middle ware function authorization');
+        const parsedToken = req.headers.authorization.split('Bearer ')[1];
         const verifiedTokenResult = jwt.verify(parsedToken,secretOrPrivateKey,(err)=>{
             if(err){
-                response.status(statusCode.UNAUTHORIZED).send(utils.successFalse(statusCode.UNAUTHORIZED,responseMessage.UNAUTHORIZED));
-                return;
+                next(err);
             }
         });
-        return verifiedTokenResult;
+        return next();
     }
 };
